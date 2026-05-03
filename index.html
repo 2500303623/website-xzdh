@@ -119,6 +119,29 @@
             transform: scale(1.02);
         }
 
+        .about-cta {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .about-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 26px;
+            background-color: rgb(240, 101, 194);
+            color: white;
+            border-radius: 32px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 10px 24px rgba(240, 101, 194, 0.2);
+        }
+
+        .about-btn:hover {
+            transform: scale(1.03);
+            background-color: rgb(215, 80, 182);
+        }
+
         .coming-soon {
             text-align: center;
             font-size: 35px;
@@ -242,9 +265,8 @@
         <!-- 头像：delay-1，最先出现 -->
         <img src="touxiang.png" alt="头像" class="avatar animate-target delay-1">
         <!-- 标题：delay-1，和头像同时出现 -->
-        <h1 class="animate-target delay-1">你好，我是 XZ_DH</h1>
-        <!-- 描述文字：delay-2，第二个出现 -->
-        <p class="animate-target delay-2">study at CJLU.</p>
+        <h1 class="animate-target delay-1">XZ_DH</h1>
+        
     </div>
 
     <!-- 音乐播放器 -->
@@ -258,13 +280,16 @@
         </button>
     </div>
 
-    <!-- 社交按钮：delay-3，最后出现 -->
-    <div class="social-buttons animate-target delay-3">
+    <!-- 社交按钮：delay-2，最后出现 -->
+    <div class="social-buttons animate-target delay-2">
         <a href="https://space.bilibili.com/3546667844373476?spm_id_from" target="_blank" class="btn bilibili"><i class="fab fa-bilibili"></i></a>
         <a href="https://github.com/2500303623" target="_blank" class="btn github"><i class="fab fa-github"></i></a>
         <a href="https://codeforces.com/profile/zyczyc2500303623" target="_blank" class="btn codeforces">
             <img src="cf.png" alt="Codeforces" style="height: 1em; width: auto; vertical-align: middle;">
         </a>
+    </div>
+    <div class="about-cta animate-target delay-3">
+        <a href="about.html" class="about-btn">了解这个网站</a>
     </div>
     <div class="coming-soon animate-target delay-4">"不哭不哭，痛痛飞走吧"</div>
     <script>
