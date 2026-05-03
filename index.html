@@ -16,7 +16,7 @@
 
         /* ========== 页面主体：背景立即显示 ========== */
         body {
-            background-image: url('beijing1.png');
+            background-image: url('beijing1.webp');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -154,6 +154,73 @@
         .animate-target.delay-4 {
             transition-delay: 1.4s;   /* 社交按钮：等0.9秒 */
         }
+
+        /* 音乐播放器样式 */
+        .music-player {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 88px;
+            height: 88px;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+        }
+
+        .music-player audio {
+            display: none;
+        }
+
+        .music-toggle {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: none;
+            background: url('ams.jpg') center/cover no-repeat;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+            position: relative;
+            z-index: 2;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.05);
+            background-color: rgba(223, 78, 179, 0.95);
+        }
+
+        .music-toggle.rotating {
+            animation: rotateButton 4s linear infinite;
+        }
+
+        @keyframes rotateButton {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .music-toggle:focus {
+            outline: 2px solid rgba(240, 101, 194, 0.9);
+            outline-offset: 2px;
+        }
+
+        .music-toggle:focus {
+            outline: 2px solid rgba(240, 101, 194, 0.9);
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body>
@@ -180,6 +247,17 @@
         <p class="animate-target delay-2">study at CJLU.</p>
     </div>
 
+    <!-- 音乐播放器 -->
+    <div class="music-player animate-target delay-4">
+        <audio id="siteAudio" title="音乐播放器">
+            <source src="鸣潮先约电台 _ 飞行雪绒 - 纸飞机_H.ogg" type="audio/ogg">
+            你的浏览器不支持 audio 元素。
+        </audio>
+        <button class="music-toggle" id="musicToggle" aria-label="播放/暂停音乐">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
+
     <!-- 社交按钮：delay-3，最后出现 -->
     <div class="social-buttons animate-target delay-3">
         <a href="https://space.bilibili.com/3546667844373476?spm_id_from" target="_blank" class="btn bilibili"><i class="fab fa-bilibili"></i></a>
@@ -196,6 +274,68 @@
             for (var i = 0; i < elements.length; i++) {
                 elements[i].classList.add('animate-in');
             }
+
+            var audio = document.getElementById('siteAudio');
+            var toggle = document.getElementById('musicToggle');
+            var icon = toggle.querySelector('i');
+            var STORAGE_KEY = 'xzdhMusicState';
+
+            var stored = {};
+            try {
+                stored = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            } catch (e) {
+                stored = {};
+            }
+
+            audio.volume = stored.volume !== undefined ? stored.volume : 0.8;
+
+            if (stored.time) {
+                audio.addEventListener('loadedmetadata', function() {
+                    if (stored.time < audio.duration) {
+                        audio.currentTime = stored.time;
+                    }
+                });
+            }
+
+            function updateButton(isPlaying) {
+                if (isPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                    toggle.classList.add('rotating');
+                } else {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                    toggle.classList.remove('rotating');
+                }
+            }
+
+            function saveState() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    time: audio.currentTime,
+                    volume: audio.volume
+                }));
+            }
+
+            toggle.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    updateButton(true);
+                } else {
+                    audio.pause();
+                    updateButton(false);
+                }
+                saveState();
+            });
+
+            audio.addEventListener('timeupdate', saveState);
+            audio.addEventListener('pause', saveState);
+            audio.addEventListener('play', saveState);
+            audio.addEventListener('ended', function() {
+                updateButton(false);
+                saveState();
+            });
+
+            window.addEventListener('beforeunload', saveState);
         });
     </script>
 </body>
