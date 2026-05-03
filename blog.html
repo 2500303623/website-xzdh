@@ -17,9 +17,10 @@
             box-sizing: border-box; 
         }
 
+        
         /* ========== 页面主体样式（背景立即显示，无动画） ========== */
         body {
-            background-image: url('beijing3.png');
+            background-image: url('beijing3.webp');
             background-size: cover;
             background-attachment: fixed;
             font-family: Arial, sans-serif;
@@ -106,6 +107,27 @@
             text-decoration: underline;
         }
 
+        .about-cta {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .about-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: rgb(240, 101, 194);
+            color: white;
+            border-radius: 28px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .about-btn:hover {
+            transform: scale(1.03);
+            background-color: rgb(215, 80, 182);
+        }
+
         /* ========== 动画类（JS触发后才生效） ========== */
         /* 初始状态：隐藏+下移 */
         .animate-target {
@@ -127,6 +149,7 @@
         .animate-target.delay-2 {
             transition-delay: 0.7s;   /* 文章卡片：等0.7秒 */
         }
+
     </style>
 </head>
 <body>
@@ -154,6 +177,7 @@
             <a href="#" class="read-more">阅读全文 →</a>
         </div>
     </div>
+    
 
     <script>
         // 等待页面所有资源（包括背景图）加载完成后，再触发动画
