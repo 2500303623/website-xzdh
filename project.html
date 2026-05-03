@@ -129,9 +129,31 @@
             transition-delay: 0.9s;
         }
 
+
         .card-link {
         text-decoration: none;      /* 去掉下划线 */
         display: block;             /* 让链接占满整个卡片 */
+        }
+
+        .about-cta {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .about-btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: rgb(240, 101, 194);
+            color: white;
+            border-radius: 28px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .about-btn:hover {
+            transform: scale(1.03);
+            background-color: rgb(215, 80, 182);
         }
     </style>
 </head>
@@ -172,8 +194,9 @@
             </div>
         </div>
         
-        <!-- 底部文字：delay-3，最后出现 -->
+        <!-- 底部文字：delay-3，最后一个出现 -->
         <div class="coming-soon animate-target delay-3">更多精彩即将到来...</div>
+        
     </div>
 
     <script>
