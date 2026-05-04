@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于 - XZDH</title>
+    <link rel="icon" type="image/png" href="../images/wy_touxiang.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            background-image: url('../images/beijing4.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: left center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: #121212;
+            background-color: #f2f0f5;
+        }
+        nav {
+            background-color: rgba(229, 231, 233, 0.88);
+            padding: 14px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .logo {
+            color: rgb(240, 101, 194);
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .nav-links a {
+            font-family: "Comic Sans MS", "Segoe UI Emoji", sans-serif;
+            color: rgb(240, 101, 194);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+        .about-container {
+            max-width: 720px;
+            margin: 60px 60px 60px auto;
+            padding: 28px 24px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 18px;
+            box-shadow: 0 14px 40px rgba(0,0,0,0.16);
+            backdrop-filter: blur(12px);
+        }
+        .about-container h1 {
+            font-size: 60px;
+            margin-bottom: 18px;
+            color: #231f24;
+        }
+        .about-container p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 18px;
+        }
+        .about-section {
+            margin-top: 24px;
+        }
+        .about-section h2 {
+            font-size: 28px;
+            margin-bottom: 12px;
+            color: #171010;
+        }
+        .animate-target {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .animate-target.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .animate-target.delay-1 { transition-delay: 0.5s; }
+        .animate-target.delay-2 { transition-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">XZ_DH</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="project.html">项目</a>
+            <a href="blog.html">博客</a>
+            <a href="about.html">关于</a>
+        </div>
+    </nav>
+
+    <div class="about-container animate-target delay-1">
+        <h1>ABOUT</h1>
+        <p>你好！我是 XZ_DH，CJLU 在读。这个网站是我个人项目的展示空间，包含首页、项目、博客和关于页面。</p>
+        <div class="about-section animate-target delay-2">
+            <h2>网站说明</h2>
+            <p>这个网站用于记录我的学习过程、展示作品、分享心得。</p>
+        </div>
+    </div>
+
+    <script>
+        window.addEventListener('load', function() {
+            var elements = document.querySelectorAll('.animate-target');
+            elements.forEach(function(el) {
+                el.classList.add('animate-in');
+            });
+        });
+    </script>
+</body>
+</html>

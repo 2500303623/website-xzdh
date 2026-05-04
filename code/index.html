@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XZDH</title>
+    <link rel="icon" type="image/png" href="../images/wy_touxiang.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-image: url('../images/beijing1.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+            color: rgb(23, 21, 21);
+        }
+
+        nav {
+            background-color: #e5e7e9;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: rgb(240, 101, 194);
+            font-size: 24px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            font-family: "Comic Sans MS", "Segoe UI Emoji", sans-serif;
+            color: rgb(240, 101, 194);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .profile {
+            background-color: rgba(255, 255, 255, 0.4);
+            text-align: center;
+            padding: 40px 20px;
+            margin: 20px;
+            border-radius: 10px;
+        }
+
+        .avatar {
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 4px solid #151315;
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.8);
+            background-color: #bebbbb;
+        }
+
+        .profile h1 {
+            margin-top: 10px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
+            background-color: white;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn.bilibili {
+            background-color: #00a1d6;
+            color: white;
+        }
+
+        .btn.github {
+            background-color: #181717;
+            color: white;
+        }
+
+        .btn.codeforces {
+            background-color: #f4f8fb;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: scale(1.02);
+        }
+
+        .about-cta {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .about-btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 26px;
+            background-color: rgb(240, 101, 194);
+            color: white;
+            border-radius: 32px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 10px 24px rgba(240, 101, 194, 0.2);
+        }
+
+        .about-btn:hover {
+            transform: scale(1.03);
+            background-color: rgb(215, 80, 182);
+        }
+
+        .coming-soon {
+            text-align: center;
+            font-size: 35px;
+            margin-top: 40px;
+            color: #100404;
+            font-weight: 400;
+        }
+
+        .animate-target {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-target.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-target.delay-1 { transition-delay: 0.5s; }
+        .animate-target.delay-2 { transition-delay: 0.7s; }
+        .animate-target.delay-3 { transition-delay: 0.9s; }
+        .animate-target.delay-4 { transition-delay: 1.4s; }
+
+        .music-player {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 88px;
+            height: 88px;
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 26px rgba(0,0,0,0.22);
+            backdrop-filter: blur(10px);
+            z-index: 99;
+        }
+
+        .music-player audio {
+            display: none;
+        }
+
+        .music-toggle {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            border: none;
+            background: url('../images/ams.jpg') center/cover no-repeat;
+            color: white;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.18);
+            position: relative;
+            z-index: 2;
+        }
+
+        .music-toggle:hover {
+            transform: scale(1.05);
+            background-color: rgba(223, 78, 179, 0.95);
+        }
+
+        .music-toggle.rotating {
+            animation: rotateButton 4s linear infinite;
+        }
+
+        @keyframes rotateButton {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .music-toggle:focus {
+            outline: 2px solid rgba(240, 101, 194, 0.9);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">XZ_DH</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="project.html">项目</a>
+            <a href="blog.html">博客</a>
+            <a href="about.html">关于</a>
+        </div>
+    </nav>
+
+    <div class="profile">
+        <img src="../images/touxiang.png" alt="头像" class="avatar animate-target delay-1">
+        <h1 class="animate-target delay-1">XZ_DH</h1>
+    </div>
+
+    <div class="music-player animate-target delay-4">
+        <audio id="siteAudio" title="音乐播放器">
+            <source src="../music/鸣潮先约电台 _ 飞行雪绒 - 纸飞机_H.ogg" type="audio/ogg">
+        </audio>
+        <button class="music-toggle" id="musicToggle" aria-label="播放/暂停音乐">
+            <i class="fas fa-play"></i>
+        </button>
+    </div>
+
+    <div class="social-buttons animate-target delay-2">
+        <a href="https://space.bilibili.com/3546667844373476?spm_id_from" target="_blank" class="btn bilibili"><i class="fab fa-bilibili"></i></a>
+        <a href="https://github.com/2500303623" target="_blank" class="btn github"><i class="fab fa-github"></i></a>
+        <a href="https://codeforces.com/profile/zyczyc2500303623" target="_blank" class="btn codeforces">
+            <img src="../images/cf.png" alt="Codeforces" style="height: 1em; width: auto; vertical-align: middle;">
+        </a>
+    </div>
+
+    <div class="about-cta animate-target delay-3">
+        <a href="about.html" class="about-btn">了解这个网站</a>
+    </div>
+
+    <div class="coming-soon animate-target delay-4">"不哭不哭，痛痛飞走吧"</div>
+
+    <script>
+        window.addEventListener('load', function() {
+            var elements = document.querySelectorAll('.animate-target');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].classList.add('animate-in');
+            }
+
+            var audio = document.getElementById('siteAudio');
+            var toggle = document.getElementById('musicToggle');
+            var icon = toggle.querySelector('i');
+            var STORAGE_KEY = 'xzdhMusicState';
+
+            var stored = {};
+            try {
+                stored = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+            } catch (e) {
+                stored = {};
+            }
+
+            audio.volume = stored.volume !== undefined ? stored.volume : 0.8;
+
+            if (stored.time) {
+                audio.addEventListener('loadedmetadata', function() {
+                    if (stored.time < audio.duration) {
+                        audio.currentTime = stored.time;
+                    }
+                });
+            }
+
+            function updateButton(isPlaying) {
+                if (isPlaying) {
+                    icon.classList.remove('fa-play');
+                    icon.classList.add('fa-pause');
+                    toggle.classList.add('rotating');
+                } else {
+                    icon.classList.remove('fa-pause');
+                    icon.classList.add('fa-play');
+                    toggle.classList.remove('rotating');
+                }
+            }
+
+            function saveState() {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                    time: audio.currentTime,
+                    volume: audio.volume
+                }));
+            }
+
+            toggle.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play();
+                    updateButton(true);
+                } else {
+                    audio.pause();
+                    updateButton(false);
+                }
+                saveState();
+            });
+
+            audio.addEventListener('timeupdate', saveState);
+            audio.addEventListener('pause', saveState);
+            audio.addEventListener('play', saveState);
+            audio.addEventListener('ended', function() {
+                updateButton(false);
+                saveState();
+            });
+
+            window.addEventListener('beforeunload', saveState);
+        });
+    </script>
+</body>
+</html>

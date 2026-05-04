@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>博客 - XZDH</title>
+    <link rel="icon" type="image/png" href="../images/wy_touxiang.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            background-image: url('../images/beijing3.webp');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: #e5e7e9;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { 
+            color: rgb(240, 101, 194);          
+            font-size: 24px; 
+            font-weight: bold; 
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            font-family: "Comic Sans MS", sans-serif;
+            color: rgb(240, 101, 194);               
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .nav-links a:hover { 
+            text-decoration: underline; 
+        }
+
+        .blog-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 20px;
+        }
+
+        .blog-container h1 {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 100px;
+        }
+
+        .blog-post {
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 25px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s;
+        }
+
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .blog-post h2 {
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .blog-date {
+            color: #171010;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .blog-summary {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: #00a1d6;            
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .read-more:hover {
+            text-decoration: underline;
+        }
+
+        .animate-target {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-target.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-target.delay-1 { transition-delay: 0.5s; }
+        .animate-target.delay-2 { transition-delay: 0.7s; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">XZ_DH</a>
+        <div class="nav-links">
+            <a href="index.html">首页</a>
+            <a href="project.html">项目</a>
+            <a href="blog.html">博客</a>   
+            <a href="about.html">关于</a>
+        </div>
+    </nav>
+
+    <div class="blog-container">
+        <h1 class="animate-target delay-1">BLOG</h1>
+        
+        <div class="blog-post animate-target delay-2">
+            <h2>牛客周赛 Round 142讲解（B~E）</h2>
+            <div class="blog-date">2026-05-04</div>
+            <p class="blog-summary">......</p>
+            <a href="../articles/20260502.html" class="read-more">阅读全文 →</a>
+        </div>
+
+        <div class="blog-post animate-target delay-2">
+            <h2>贪吃蛇小游戏已完工！！！</h2>
+            <div class="blog-date">2026-05-04</div>
+            <p class="blog-summary">欢迎前往我的github仓库欣赏！</p>
+            
+        </div>
+
+        <div class="blog-post animate-target delay-2">
+            <h2>写点什么好呢...</h2>
+            <div class="blog-date">2026-05-02</div>
+            <p class="blog-summary">......</p>
+            
+        </div>
+
+
+    </div>
+
+    
+        
+    
+
+    <script>
+        window.addEventListener('load', function() {
+            var elements = document.querySelectorAll('.animate-target');
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].classList.add('animate-in');
+            }
+        });
+    </script>
+</body>
+</html>
