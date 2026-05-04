@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>牛客周赛 Round 142讲解--XZDH</title>
+    <link rel="icon" type="image/png" href="../images/wy_touxiang.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-image: url('../images/beijing4.png');
+            background-size: cover;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            background-color: #e5e7e9;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { color: rgb(240, 101, 194); font-size: 24px; font-weight: bold; text-decoration: none; }
+        .nav-links a {
+            font-family: "Comic Sans MS", sans-serif;
+            color: rgb(240, 101, 194);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .nav-links a:hover { text-decoration: underline; }
+
+        /* 固定在左上角的返回链接 */
+        .fixed-back {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background-color 0.2s;
+        }
+        .fixed-back:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            text-decoration: none;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .article-container h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .article-date {
+            color: #0a0a0a;
+            font-size: 14px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .article-content {
+            line-height: 1.8;
+            color: #0b0b0b;
+            font-size: 16px;
+        }
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        .article-content h2 {
+            margin: 30px 0 15px 0;
+            color: #007bff;
+        }
+        .article-content code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .article-content pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav>
+        <a href="../index.html" class="logo">XZ_DH</a>
+        <div class="nav-links">
+            <a href="../code/index.html">首页</a>
+            <a href="../code/project.html">项目</a>
+            <a href="../code/blog.html">博客</a>
+            <a href="../code/about.html">关于</a>
+        </div>
+    </nav>
+
+    <!-- 固定在左上角的返回链接（滚动时不动） -->
+    <a href="../code/blog.html" class="fixed-back">← 返回博客列表</a>
+
+    <!-- 文章内容 -->
+    <div class="article-container">
+        <h1>牛客周赛 Round 142讲解（B~E）--XZDH</h1>
+        <div class="article-date">2026-05-04</div>
+        <div class="article-content">
+            <p>题目：<a href="https://ac.nowcoder.com/acm/contest/133790" target="_blank" rel="noopener noreferrer">牛客周赛 Round 142</a></p>
+            <p></p>
+            <h2>B</h2>
+            <p>由于每次只能选择首位和尾位，所以我们可以初始化一个按1~n的deque，对于每个值，我们检查该值是否等于deque的首元素或尾元素，如果是，则从deque中移除该元素。</p>
+            <pre><code>// 代码示例
+void solve()
+{
+    int n;
+    cin&gt;&gt;n;
+    deque &lt;int&gt; dq;
+
+    for(int i=0;i&lt;n;i++)
+    {
+        dq.push_back(i+1);
+    }
+
+    int ok=1;
+    for(int i=0;i&lt;n;i++)
+    {
+        int x;
+        cin&gt;&gt;x;
+        int op=dq.front();
+        int ed=dq.back();
+        if(x==op) dq.pop_front();
+        else if(x==ed) dq.pop_back();
+        else
+        {
+            ok=0;
+        }
+    }
+    cout &lt;&lt; (ok?"YES":"NO") &lt;&lt; endl;
+}
+</code></pre>
+            <p> </p>
+        </div>
+        
+
+        <div class="article-content">
+            
+            <h2>C</h2>
+            <p>注意题干的“子序列中的元素在原数组中的相对顺序必须保持不变，但不要求连续。”，所以只需按顺序逐个检查数组中的元素，初始时最长子序列长度为1，如果当前元素能被当前长度整除，则增加最长子序列长度，否则检查下一个元素。</p>
+            <pre><code>// 代码示例
+void solve()
+{
+    int n;
+    cin&gt;&gt;n;
+    map&lt;int,int&gt; mp;
+    int Max=0;
+    int cnt=1;
+    for(int i=0;i&lt;n;i++)
+    {
+        int x;
+        cin&gt;&gt;x;
+        if(x%cnt==0) cnt++;
+    }
+    cout&lt;&lt;cnt-1&lt;&lt;endl;
+}
+</code></pre>
+            <p> </p>
+        </div>
+
+        <div class="article-content">
+            
+            <h2>D</h2>
+            <p>“所有小朋友手上的糖数两两相等”，要达成这个条件，我们只需要确保每个小朋友最终手上的糖数都相同。所以首先判断总糖数是否能被小朋友数量整除，若不能，则可以直接判断为NO。反之，由于每个人只能给出一个糖果或获得一个糖果，所以遍历每个人，如果当前的人的糖果数大于（平均值+1）or小于（平均值-1），则可以判断为NO，如果等于平均值+1，则当前的人的糖果数-1，下一个人的糖果数+1。</p>
+            <pre><code>// 代码示例
+void solve()
+{
+    int n;
+    cin&gt;&gt;n;
+    vector&lt;ll&gt; a(n+2);
+    ll sum=0;
+    for(int i=1;i&lt;=n;i++)
+    {
+        cin&gt;&gt;a[i];
+        sum+=a[i];
+    }
+    a[n+1]=a[1];
+    a[0]=a[n];
+    if(sum%n!=0)
+    {
+        cout&lt;&lt;"NO"&lt;&lt;endl;
+        return;
+    }
+
+    ll ave=sum/n;
+    for(int i=1;i&lt;=n;i++)
+    {
+        if(a[i]&gt;ave+1||a[i]&lt;ave-1)
+        {
+            cout&lt;&lt;"NO"&lt;&lt;endl;
+            return;
+        }
+        
+        if(a[i]==ave+1)
+        {
+            if(i==n)
+            {
+                a[i]--;
+                a[1]++;
+            }
+            else 
+            {
+                a[i]--;
+                a[i+1]++;
+            }
+            
+        }
+
+    }
+    cout&lt;&lt;"YES"&lt;&lt;endl;
+    
+}</code></pre>
+            <p> </p>
+        </div>
+
+        <div class="article-content">
+            
+            <h2>E</h2>
+            <p>所选区间长度>=2，所以区间内不能出现孤立一点，并且区间必须先增后减（可平）</p>
+            <pre><code>// 代码示例
+void solve()
+{
+    int n;
+    cin &gt;&gt; n;
+    vector&lt;int&gt; a(n);
+    for (int i = 0; i &lt; n; i++)
+    {
+        cin &gt;&gt; a[i];
+    }
+    
+    if (n == 1)
+    {
+        if (a[0] == 0) cout &lt;&lt; "Yes" &lt;&lt; endl;
+        else cout &lt;&lt; "No" &lt;&lt; endl;
+        return;
+    }
+    
+    if (a[0] &gt; a[1] || a[n-2] &lt; a[n-1])
+    {
+        cout &lt;&lt; "No" &lt;&lt; endl;
+        return;
+    }
+    
+    for (int i = 1; i &lt; n - 1; i++)
+    {
+        if (a[i] &gt; a[i-1] &amp;&amp; a[i] &gt; a[i+1])
+        {
+            cout &lt;&lt; "No" &lt;&lt; endl;
+            return;
+        }
+    }
+    
+    cout &lt;&lt; "Yes" &lt;&lt; endl;
+}</code></pre>
+            <p> </p>
+        </div>
+
+    </div>
+</body>
+</html>
