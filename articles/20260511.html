@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西交大校赛讲解--XZDH</title>
+    <link rel="icon" type="image/png" href="../images/wy_touxiang.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+        background-color: #ffffff;
+        font-family: Arial, sans-serif;
+        }
+        
+        nav {
+            background-color: #e5e7e9;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { color: rgb(240, 101, 194); font-size: 24px; font-weight: bold; text-decoration: none; }
+        .nav-links a {
+            font-family: "Comic Sans MS", sans-serif;
+            color: rgb(240, 101, 194);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+        .nav-links a:hover { text-decoration: underline; }
+
+        .fixed-back {
+            position: fixed;
+            top: 80px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            z-index: 1000;
+            transition: background-color 0.2s;
+        }
+        .fixed-back:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            text-decoration: none;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .article-container h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .article-date {
+            color: #0a0a0a;
+            font-size: 14px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .article-content {
+            line-height: 1.8;
+            color: #0b0b0b;
+            font-size: 16px;
+        }
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        .article-content h2 {
+            margin: 30px 0 15px 0;
+            color: #007bff;
+        }
+        .article-content code {
+            background-color: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        .article-content pre {
+            background-color: #f4f4f4;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="../index.html" class="logo">XZ_DH</a>
+        <div class="nav-links">
+            <a href="../index.html">首页</a>
+            <a href="../project.html">项目</a>
+            <a href="../blog.html">博客</a>
+            <a href="../about.html">关于</a>
+        </div>
+    </nav>
+
+    <a href="../blog.html" class="fixed-back">← 返回博客列表</a>
+
+    <div class="article-container">
+        <h1>西交大校赛讲解（C~E）--XZDH</h1>
+        <div class="article-date">2026-05-04</div>
+        <div class="article-content">
+            <p>题目：<a href="https://www.luogu.com.cn/contest/314922#problems" target="_blank" rel="noopener noreferrer">西交大校赛</a></p>
+            
+            <h2>C</h2>
+            <p>取y为x的二进制最小1,此时y能整除x，x&y=y，gcd（x，y）=y</p>
+            <pre><code>// 代码示例
+void solve()
+{
+    ll x; cin &gt;&gt; x;
+    ll p = x;
+    ll ans = 1;
+    ll o = 0;
+    while(p &gt; 0)
+    {
+        if(p % 2 == 0)
+        {
+            ans += pow(2, o);
+        }
+        if(gcd(ans, x) == (ans &amp; x)) break;
+        o++;
+        p /= 2;
+    }
+    cout &lt;&lt; ans &lt;&lt; endl;
+}
+</code></pre>
+
+            <h2>D</h2>
+            <p>bfs遍历每一个格子，对每个格子的4个方向扩展，判断这个格子所在连通块是否同色</p>
+            <pre><code>// 代码示例
+int dx[4]={0,0,-1,1};
+int dy[4]={1,-1,0,0};
+int n,m;
+int ok = 1;
+
+
+void bfs(vector&lt;string&gt;&amp;s,vector&lt;vector&lt;int&gt;&gt;&amp;vis)
+{
+    for(int i = 0; i &lt; n; i++)
+    {
+        for(int j = 0; j &lt; m; j++)
+        {
+            queue&lt;pair&lt;int, int&gt;&gt;q;
+            if(!vis[i][j])
+            {
+                q.push({i,j});
+                vis[i][j] = 1;
+                char color = s[i][j];
+                int min_r = i, max_r = i;
+                int min_c = j, max_c = j;
+
+                while(!q.empty())
+                {
+                    auto [x,y] = q.front();
+                    q.pop();
+
+                    min_r = min(min_r,x);
+                    max_r = max(max_r,x);
+                    min_c = min(min_c,y);
+                    max_c = max(max_c,y);
+
+                    for(int k = 0; k &lt; 4; k++)
+                    {
+                        int nx = x + dx[k];
+                        int ny = y + dy[k];
+
+                        if(nx &gt;= 0 &amp;&amp; nx &lt; n &amp;&amp; ny &gt;= 0 &amp;&amp; ny &lt; m &amp;&amp; !vis[nx][ny] &amp;&amp; s[nx][ny] == color)
+                        {
+                            vis[nx][ny] = 1;
+                            q.push({nx,ny});
+                        }
+                    }
+                }
+
+                for(int r = min_r; r &lt;= max_r; r++)
+                {
+                    for(int c = min_c; c &lt;= max_c; c++)
+                    {
+                        if(s[r][c] != color)
+                        {
+                            ok = 0;
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+void solve()
+{
+    cin &gt;&gt; n &gt;&gt; m;
+    ok = 1;
+    vector&lt;string&gt;s(n);
+    vector&lt;vector&lt;int&gt;&gt;vis(n,vector&lt;int&gt;(m,0));
+    for(int i = 0; i &lt; n; i++) cin &gt;&gt; s[i];
+
+    bfs(s ,vis);
+
+    cout &lt;&lt; (ok ? &quot;YES&quot; : &quot;NO&quot;) &lt;&lt; endl;
+}
+</code></pre>
+
+            <h2>E</h2>
+            <p>对每一次操作，记录所得的值的最大和最小值，dp</p>
+            <pre><code>// 代码示例
+ll calc1(ll step,vector&lt;vector&lt;string&gt;&gt;&amp;num,vector&lt;string&gt;&amp;sign,ll ccc)
+{
+    ll cur = ccc;
+    if(num[step][0] == &quot;x&quot;)
+    {
+        if(sign[step][0] == &#39;*&#39;) cur = cur * (stoll(num[step][1]));
+        else if(sign[step][0] == &#39;-&#39;) cur = cur - (stoll(num[step][1]));
+        else if(sign[step][0] == &#39;+&#39;) cur = cur + (stoll(num[step][1]));
+        else cur = cur / (stoll(num[step][1]));
+    }
+    else
+    {
+        if(sign[step][0] == &#39;*&#39;) cur =(stoll(num[step][0])) * cur;
+        else if(sign[step][0] == &#39;-&#39;) cur = (stoll(num[step][0])) - cur;
+        else if(sign[step][0] == &#39;+&#39;) cur = cur + (stoll(num[step][0]));
+        else cur = (stoll(num[step][0])) / cur;
+    }
+    return cur;
+}
+
+ll calc2(ll step,vector&lt;vector&lt;string&gt;&gt;&amp;num,vector&lt;string&gt;&amp;sign,ll ccc)
+{
+    ll cur = ccc;
+    if(num[step][2] == &quot;x&quot;)
+    {
+        if(sign[step][1] == &#39;*&#39;) cur = cur * (stoll(num[step][3]));
+        else if(sign[step][1] == &#39;-&#39;) cur = cur - (stoll(num[step][3]));
+        else if(sign[step][1] == &#39;+&#39;) cur = cur + (stoll(num[step][3]));
+        else cur = cur / (stoll(num[step][3]));
+    }
+    else
+    {
+        if(sign[step][1] == &#39;*&#39;) cur =(stoll(num[step][2])) * cur;
+        else if(sign[step][1] == &#39;-&#39;) cur = (stoll(num[step][2])) - cur;
+        else if(sign[step][1] == &#39;+&#39;) cur = cur + (stoll(num[step][2]));
+        else cur = (stoll(num[step][2])) / cur;
+    }
+    return cur;
+}
+
+void solve()
+{
+    ll  n,x;
+    cin &gt;&gt; n &gt;&gt; x;
+
+    vector&lt;string&gt;sign(n);
+    vector&lt;vector&lt;string&gt;&gt;num(n);
+    for(int i = 0; i &lt; n; i++)
+    {
+        char sign1,sign2;
+        string num1,num2,num3,num4;
+        cin &gt;&gt; num1 &gt;&gt; sign1 &gt;&gt; num2 &gt;&gt; num3 &gt;&gt; sign2 &gt;&gt; num4;
+        num[i].push_back(num1);
+        num[i].push_back(num2);
+        num[i].push_back(num3);
+        num[i].push_back(num4);
+        sign[i].push_back(sign1);
+        sign[i].push_back(sign2);
+    }
+    vector&lt;vector&lt;ll&gt;&gt;dp(n,vector&lt;ll&gt;(2,0));
+    dp[0][0]=max(calc1(0,num,sign,x),calc2(0,num,sign,x));
+    dp[0][1]=min(calc1(0,num,sign,x),calc2(0,num,sign,x));
+    
+
+
+    for(int i = 1; i &lt; n; i++)
+    {
+       dp[i][0] = max(calc1(i,num,sign,dp[i-1][0]),calc2(i,num,sign,dp[i-1][0]));
+       dp[i][0] = max(dp[i][0],max(calc1(i,num,sign,dp[i-1][1]),calc2(i,num,sign,dp[i-1][1])));
+       dp[i][1] = min(calc1(i,num,sign,dp[i-1][0]),calc2(i,num,sign,dp[i-1][0]));
+       dp[i][1] = min(dp[i][1],min(calc1(i,num,sign,dp[i-1][1]),calc2(i,num,sign,dp[i-1][1])));
+    }
+
+    ll ans = max(dp[n-1][1],dp[n-1][0]);
+    cout &lt;&lt; ans &lt;&lt; endl;
+}</code></pre>
+
+    </div>
+</body>
+</html>
